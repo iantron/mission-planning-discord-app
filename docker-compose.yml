@@ -1,0 +1,13 @@
+version: "3.8"
+services:
+  web:
+    build: ./app
+    ports:
+      - "8080:8080"
+    container_name: air-plan-app
+    restart: unless-stopped
+    secrets:
+      - client-pubkey
+secrets:
+  client-pubkey:
+    file: ./discord-public-key.secret

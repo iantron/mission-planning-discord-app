@@ -1,0 +1,54 @@
+{
+    "name": "create-flight",
+    "description": "Registers a new flight in the PRG:DCS Air Plan",
+    "options": [
+        {
+            "name": "flight-callsign",
+            "description": "A name for the flight",
+            "type": 3,
+            "required": True
+        },
+        {
+            "name": "task",
+            "description": "What will you be doing?",
+            "type": 3,
+            "required": True,
+            "choices": [
+                {
+                    "name": "CAP",
+                    "value": "cap"
+                },
+                {
+                    "name": "Practice",
+                    "value": "practice"
+                },
+                {
+                    "name": "Strike",
+                    "value": "strike"
+                }
+            ]
+        },
+        {
+            "name": "airframe",
+            "description": "What aircraft will you be flying?",
+            "type": 3,
+            "required": True,
+            "choices": [
+                {
+                    "name": "F-14B",
+                    "value": "f14b"
+                },
+                {
+                    "name": "F/A-18C",
+                    "value": "fa18c"
+                }
+            ]
+        },
+        {
+            "name": "datetime",
+            "description": "When are you flying?",
+            "type": 3,
+            "required": True
+        }
+    ]
+}
