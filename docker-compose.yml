@@ -6,8 +6,14 @@ services:
       - "8080:8080"
     container_name: air-plan-app
     restart: unless-stopped
+    environment:
+        CLIENT_PUBKEY_FILE: /run/secrets/client-pubkey
+        TABLE_API_KEY_FILE: /run/secrets/table-api-key
     secrets:
       - client-pubkey
+      - table-api-key
 secrets:
   client-pubkey:
     file: ./discord-public-key.secret
+  table-api-key:
+    file: ./airtable-api-key.secret

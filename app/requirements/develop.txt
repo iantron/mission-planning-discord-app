@@ -2,3 +2,4 @@ locust
 black
 isort
 pytest
+pynacl

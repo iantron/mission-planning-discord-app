@@ -1,11 +1,11 @@
 openapi: 3.0.0
 info:
-  title: Minimal Flask API Example
-  description: This file is for demonstration purposes only, you should fill in your own details.
-  version: 0.0.0
+  title: Mission Planning Discord Interaction API
+  description: This API describes the interface between Discord and the Mission Planning Application
+  version: 0.0.1
 servers:
-  - url: http://localhost:5000
-    description: This is a dummy value describing the base URL for the API.
+  - url: http://localhost:8080
+    description: The base URL for the application
 paths:
   /:
     get:
@@ -27,3 +27,15 @@ paths:
           content:
             text/plain:
               "OK"
+  /interactions:
+    post:
+      summary: Discord interactions are sent here.
+      description: This is the route for all Discord interactions. The specific interaction requested is determined by the json payload.
+      responses:
+        '200':    # good
+          description: The default response.
+          content:
+            raw/json:
+              "OK"
+        '401':    # bad request
+          description: The request was probably not signed properly
