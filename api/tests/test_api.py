@@ -2,7 +2,7 @@ import os
 import time
 import json
 import pytest
-from api.app import create_app
+from app.app import create_app
 from nacl.encoding import HexEncoder
 from nacl.signing import SigningKey
 from flask import Flask, Response, jsonify, request

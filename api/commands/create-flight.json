@@ -3,13 +3,13 @@
     "description": "Registers a new flight in the PRG:DCS Air Plan",
     "options": [
         {
-            "name": "flight-callsign",
+            "name": "Flight Callsign",
             "description": "A name for the flight",
             "type": 3,
             "required": True
         },
         {
-            "name": "task",
+            "name": "Objective",
             "description": "What will you be doing?",
             "type": 3,
             "required": True,
@@ -29,7 +29,7 @@
             ]
         },
         {
-            "name": "airframe",
+            "name": "Airframe",
             "description": "What aircraft will you be flying?",
             "type": 3,
             "required": True,
@@ -45,7 +45,7 @@
             ]
         },
         {
-            "name": "datetime",
+            "name": "Launch Schedule",
             "description": "When are you flying?",
             "type": 3,
             "required": True

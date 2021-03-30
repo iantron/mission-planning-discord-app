@@ -17,17 +17,20 @@ def create_app(test_config=None):
     else:
         app.config.from_mapping(test_config)
 
-    CLIENT_PUBLIC_KEY = app.config['CLIENT_PUBLIC_KEY']
-
-    # Set up Airtable
-    #AIRTABLE_BASE_KEY = app.config['AIRTABLE_BASE_KEY']
-    #AIRTABLE_API_KEY = app.config['AIRTABLE_API_KEY']
-    #air_plan = airtable.Airtable(AIRTABLE_BASE_KEY, AIRTABLE_API_KEY)
-
+    # ensure the instance folder exists
     try: os.makedirs(app.instance_path)
     except OSError:
         pass
 
+    CLIENT_PUBLIC_KEY = app.config['CLIENT_PUBLIC_KEY']
+    FLIGHT_PLANNER = app.config['FLIGHT_PLANNER_ROLE_ID']
+
+    # Set up Airtable
+    AIRTABLE_BASE_KEY = app.config['AIRTABLE_BASE_KEY']
+    AIRTABLE_TABLE_NAME = app.config['AIRTABLE_TABLE_NAME']
+    AIRTABLE_API_KEY = app.config['AIRTABLE_API_KEY']
+    airtable = airtable.Airtable(AIRTABLE_BASE_KEY, AIRTABLE_TABLE_NAME, api_key=AIRTABLE_API_KEY)
+    
     # Define Flask Routes
     @app.route("/")
     def index():
@@ -74,28 +77,24 @@ def create_app(test_config=None):
             # datetime = data['options']['datetime']
             # user_id = data['member']['user']['id']
             # user_nick = data['member']['nick']
-            # user_roles = data['member']['roles']
-            # if FLIGHT_PLANNER not in user_roles:
-                # return jsonify({
-                    # 'type': InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-                    # 'data': {
-                        # 'content': 'You are not an authorized flight planner. Speak with your game admin.'
-                    # }
-                # })
-            # else:
-                # air_plan.create_flight( data )
-                # return jsonify({
-                    # 'type': InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-                    # 'data': {
-                        # 'content': 'Flight registered'
-                    # }
-                # })
-            return jsonify({
-                'type': InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-                'data': {
-                    'content': 'Flight registered'
-                }
-            })
+            user_roles = data['member']['roles']
+            if FLIGHT_PLANNER not in user_roles:
+                return jsonify({
+                    'type': InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+                    'data': {
+                        'content': 'You are not an authorized flight planner. Speak with your game admin.'
+                    }
+                })
+            else:
+                task_dict = data['options']
+                task_dict['Pilot Callsigns'] = data['member']['nick']
+                airtable.insert(task_dict)
+                return jsonify({
+                    'type': InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+                    'data': {
+                        'content': 'Flight registered'
+                    }
+                })
 
     return app
         

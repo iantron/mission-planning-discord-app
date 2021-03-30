@@ -1,19 +1,15 @@
 version: "3.8"
 services:
   web:
-    build: ./app
+    build: ./api
     ports:
       - "8080:8080"
     container_name: air-plan-app
     restart: unless-stopped
     environment:
-        CLIENT_PUBKEY_FILE: /run/secrets/client-pubkey
-        TABLE_API_KEY_FILE: /run/secrets/table-api-key
+        APPLICATION_CONFIG_PATH: /run/secrets/app-config
     secrets:
-      - client-pubkey
-      - table-api-key
+      - app-config
 secrets:
-  client-pubkey:
-    file: ./discord-public-key.secret
-  table-api-key:
-    file: ./airtable-api-key.secret
+  app-config:
+    file: ./app.config

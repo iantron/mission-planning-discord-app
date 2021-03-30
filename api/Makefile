@@ -16,13 +16,13 @@ start:
 	@bash bin/run.sh
 
 install:
-	@pip3 install -r requirements/common.txt
+	@pip install -r requirements/common.txt
 
 develop:
-	@pip3 install -r requirements/common.txt -r requirements/develop.txt
+	@pip install -r requirements/common.txt -r requirements/develop.txt
 
 test:
-	@pytest-3 tests
+	@pytest tests
 
 load-test:
 	@locust -f tests/load/locustfiles/api.py
